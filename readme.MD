@@ -12,8 +12,8 @@ This project used Airport passenger of San Fransisco Airport from 2005 to 2016
  
 This Project was created to aim these following objectives : 
 
-- Create **[Time Series Model](https://github.com/fakhrirobi/airtraffic_forecast)** for Forecasting Purpose.
-- Create **[Business Intelligence Dashboard](hhttps://bi-dashbaord-024e4cae0bac.herokuapp.com/)** .
+- Create **[Time Series Model] for Forecasting Purpose.
+- Create **[Business Intelligence Dashboard]**(https://bi-dashbaord-024e4cae0bac.herokuapp.com/)** .
 - Create **[API]()** for forecasting number of passenger of given period
     
 ##### :pencil2: PROJECT WORKFLOW 
