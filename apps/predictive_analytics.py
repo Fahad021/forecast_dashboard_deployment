@@ -229,16 +229,12 @@ custom_model_page= dbc.Container(
 )
 
 #render apps page
-def render_predictive_analytics_page() : 
-    # lag_slider = dcc.Slider(id='lag_slider', 
-    #                     value=12, 
-    #                     min=1, 
-    #                     max=129)
-    #defining the page 3 tabs pre
-    tabs = html.Div(
+def render_predictive_analytics_page(): 
+    return html.Div(
         [
-            dbc.Tabs(className="nav nav-pills nav-fill",children=
-                [
+            dbc.Tabs(
+                className="nav nav-pills nav-fill",
+                children=[
                     dbc.Tab(label="Time Series Decomposition", tab_id="tab-1"),
                     dbc.Tab(label="Forecast", tab_id="tab-2"),
                     dbc.Tab(label="Custom Model Training", tab_id="tab-3"),
@@ -249,8 +245,6 @@ def render_predictive_analytics_page() :
             html.Div(id="content"),
         ]
     )
-    
-    return tabs
 
 '''creating callback function two switch between three navbar/ tabs : 1. timeseries_decomposition_page
     2. forecast_page 
@@ -276,27 +270,26 @@ def tab_navy(pressed_tab):
 # callback function to determine the length of forecast horizon based on choosen date ( monthly basis ) from last point (march 2016)
 @app.callback(
     Output(component_id='render_forecast_step',component_property='data'),
-    
+
     Input(component_id='month_picker',component_property='date')
 )
-def get_forecast_step(date_value) : 
+def get_forecast_step(date_value): 
     #extracting string of date_value from component with id month_picker
     date_object = date.fromisoformat(date_value) #converting from str to datetime 
     month = date_object.month #extract the number of month
     year = date_object.year #extract the number of year 
     to_forecast_date = [] #create empty list to contain datetime index 
-    
-    
+
+
     #logic for determining datetime
-    if month < 10 : 
+    if month < 10: 
         to_forecast_date.append(date.fromisoformat(f'{year}-0{month}-01') )
-    elif month >= 10 : 
+    else:
         to_forecast_date.append(date.fromisoformat(f'{year}-{month}-01') )
     last_date = date.fromisoformat('2016-03-01')
     #counting the length of forecast 
     diff = relativedelta.relativedelta(to_forecast_date[0], last_date)
-    forecast_step = diff.months + diff.years * 12
-    return forecast_step
+    return diff.months + diff.years * 12
 
 
 #callback function to forecast based on forecast step callback function 
@@ -304,19 +297,15 @@ def get_forecast_step(date_value) :
     Output(component_id='render_forecast_result',component_property='figure'),
     Input(component_id='render_forecast_step',component_property='data'), 
     Input(component_id='window_size_input',component_property='value')
-    
+
 )
-def forecast_timeseries_data(forecast_step,window_size) : 
+def forecast_timeseries_data(forecast_step,window_size): 
     #load model 
     loaded_model = SARIMAXResults.load('model/moving_avg_diff_passenger_ovetime_model.pkl')
-    
+
     # forecast using step
     forecast_result  = loaded_model.forecast(steps=forecast_step)
-    #store result in a variable 
-    
-    #display forecast value
-    figure = render_forecast_figure(forecast_result,window_size)
-    return figure
+    return render_forecast_figure(forecast_result,window_size)
 
 
 #callback function to store custom sarimax model params and then stored the variable to dash core component : dcc.store

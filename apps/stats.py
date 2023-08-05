@@ -45,7 +45,7 @@ region_dropdown = dcc.Dropdown(
                                 
                             
 #render statistics page layout
-def render_statistics() : 
+def render_statistics(): 
     select_year = html.Div(dbc.Card([html.H4('Select Range Year : ',className='card-title text-center'),
                                       dcc.RangeSlider(id='year-select',
                                                     min=np.min(year_list),
@@ -66,84 +66,141 @@ def render_statistics() :
                                                             2016: {'label': '2016', 'style': {'color': '#77b0b1'}}
 
                                                         },tooltip={"placement": "bottom", "always_visible": True})
-                                                    
-                    
-                                      
+
+
+
                                       ]))
-    
-    page = dbc.Container(
-        
-        children= [ 
-                dbc.Row(
-                    select_year 
-                    
-                ),
-                html.Br(),
 
-                dbc.Row(dbc.Card(html.H5('Statisctics of Total Passenger based on several category',className='card-title text-center'))), 
-                html.Br(),
-                dbc.Row(
-                    [dbc.Col(dbc.Card(
-                                        [
-                                            html.H6(id='metrics_overall_passanger_growth_header',className='card-title text-center'), 
-                                            html.H4(id='metrics_overall_passanger_growth',className='card-title text-center')
-                                        ]
-                        ,style=stats_basic_container_style),width=4), 
-                     dbc.Col(dbc.Card(
-                                        [   operating_airlines_dropdown, 
-                                            html.H6(id='metrics_airlines_passanger_growth_header',className='card-title text-center'), 
-                                            html.H4(id='metrics_airlines_passanger_growth',className='card-title text-center')
-                                        ]
-                         ,style=stats_basic_container_style),width=4), 
-                     dbc.Col(dbc.Card(
-                                        [   region_dropdown, 
-                                            html.H6(id='metrics_region_passanger_growth_header',className='card-title text-center'), 
-                                            html.H4(id='metrics_region_passanger_growth',className='card-title text-center')
-                                        ]
-                         ,style=stats_basic_container_style),width=4) ] 
-                ),
-                html.Br(),
-                dbc.Row(dbc.Col(
+    return dbc.Container(
+        children=[
+            dbc.Row(select_year),
+            html.Br(),
+            dbc.Row(
+                dbc.Card(
+                    html.H5(
+                        'Statisctics of Total Passenger based on several category',
+                        className='card-title text-center',
+                    )
+                )
+            ),
+            html.Br(),
+            dbc.Row(
+                [
+                    dbc.Col(
                         dbc.Card(
-
-                                dbc.CardBody(
-                                    [
-                                        html.H6("Card title", id='passenger_overtime_card_title' , className="card-title text-center"), 
-                                        dcc.Graph(id='passenger_overtime')
-                                        
-
-                                    ]
-                                )
-                        ) 
-                        # children= [dbc.Col(dcc.Graph(id='passenger_overtime'),width=6), 
-                        #             dbc.Col(dbc.Card(dcc.Graph()),width=5), dbc.Col(dbc.Card(dcc.Graph()),width=5)]
-
-                
-                ,width=12)),
-                html.Br(),
-                dbc.Row(
-                    [dbc.Col(
+                            [
+                                html.H6(
+                                    id='metrics_overall_passanger_growth_header',
+                                    className='card-title text-center',
+                                ),
+                                html.H4(
+                                    id='metrics_overall_passanger_growth',
+                                    className='card-title text-center',
+                                ),
+                            ],
+                            style=stats_basic_container_style,
+                        ),
+                        width=4,
+                    ),
+                    dbc.Col(
                         dbc.Card(
-
-                            dbc.CardBody([html.H6("Title",id='passenger_airlines_card_title' ,className="card-title text-center"), 
-                                         dcc.Graph(id='passenger_airlines')]))
-                    
-                    ,width=6),dbc.Col(
-                                                dbc.Card(
-
-                            dbc.CardBody([html.H6("Title",id ='passenger_region_card_title' ,className="card-title text-center"), 
-                                         dcc.Graph(id='passenger_region')])
+                            [
+                                operating_airlines_dropdown,
+                                html.H6(
+                                    id='metrics_airlines_passanger_growth_header',
+                                    className='card-title text-center',
+                                ),
+                                html.H4(
+                                    id='metrics_airlines_passanger_growth',
+                                    className='card-title text-center',
+                                ),
+                            ],
+                            style=stats_basic_container_style,
+                        ),
+                        width=4,
+                    ),
+                    dbc.Col(
+                        dbc.Card(
+                            [
+                                region_dropdown,
+                                html.H6(
+                                    id='metrics_region_passanger_growth_header',
+                                    className='card-title text-center',
+                                ),
+                                html.H4(
+                                    id='metrics_region_passanger_growth',
+                                    className='card-title text-center',
+                                ),
+                            ],
+                            style=stats_basic_container_style,
+                        ),
+                        width=4,
+                    ),
+                ]
+            ),
+            html.Br(),
+            dbc.Row(
+                dbc.Col(
+                    dbc.Card(
+                        dbc.CardBody(
+                            [
+                                html.H6(
+                                    "Card title",
+                                    id='passenger_overtime_card_title',
+                                    className="card-title text-center",
+                                ),
+                                dcc.Graph(id='passenger_overtime'),
+                            ]
                         )
-                    ,width=6)])
+                    )
+                    # children= [dbc.Col(dcc.Graph(id='passenger_overtime'),width=6),
+                    #             dbc.Col(dbc.Card(dcc.Graph()),width=5), dbc.Col(dbc.Card(dcc.Graph()),width=5)]
+                    ,
+                    width=12,
+                )
+            ),
+            html.Br(),
+            dbc.Row(
+                [
+                    dbc.Col(
+                        dbc.Card(
+                            dbc.CardBody(
+                                [
+                                    html.H6(
+                                        "Title",
+                                        id='passenger_airlines_card_title',
+                                        className="card-title text-center",
+                                    ),
+                                    dcc.Graph(id='passenger_airlines'),
+                                ]
+                            )
+                        ),
+                        width=6,
+                    ),
+                    dbc.Col(
+                        dbc.Card(
+                            dbc.CardBody(
+                                [
+                                    html.H6(
+                                        "Title",
+                                        id='passenger_region_card_title',
+                                        className="card-title text-center",
+                                    ),
+                                    dcc.Graph(id='passenger_region'),
+                                ]
+                            )
+                        ),
+                        width=6,
+                    ),
+                ]
+            ),
         ]
-                # ),
-                # html.Br(),
-                # dbc.Row(
-                #     dcc.Graph(id='passenger_region')
-                # )]
+        # ),
+        # html.Br(),
+        # dbc.Row(
+        #     dcc.Graph(id='passenger_region')
+        # )]
     )
-    
-    return page
 #callback to adjust timerange in rendering passenger overtime
 @app.callback(
     [Output(component_id='passenger_overtime',component_property='figure'),

@@ -69,9 +69,15 @@ def render_passenger_overtime(data=passanger_count_group_period) :
 
 
 
-def render_passenger_region(data=passanger_count_group_region) : 
-    fig = px.pie(data, values='Passenger Count_sum', names='GEO Region', color='GEO Region', template='ggplot2', title='Passenger Proportion divided by Continent')
-    return fig
+def render_passenger_region(data=passanger_count_group_region): 
+    return px.pie(
+        data,
+        values='Passenger Count_sum',
+        names='GEO Region',
+        color='GEO Region',
+        template='ggplot2',
+        title='Passenger Proportion divided by Continent',
+    )
 
 
 def render_passenger_airlines(data=passanger_count_group_airlines) : 

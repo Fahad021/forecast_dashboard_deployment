@@ -12,12 +12,10 @@ logger = logger
 class DataWrangler : 
     #loading the dataset 
     
-    def load_data(self) : 
+    def load_data(self): 
         
         filepath = 'Air_Traffic_Passenger_Statistics.csv'
-        data = pd.read_csv(filepath)
-        #change_back_to_default_path 
-        return data 
+        return pd.read_csv(filepath) 
     
     def prepare_eda_data(self,dataframe) : 
         '''
@@ -44,17 +42,16 @@ class DataWrangler :
         data['GEO Region'] = data['GEO Region'].replace('Mexico', 'South America')
         return data
     
-    def prepare_forecast_data(self,dataframe,logger=logger) : 
+    def prepare_forecast_data(self,dataframe,logger=logger): 
         #check if the dataframe is pd.Dataframe
         if isinstance(dataframe, pd.DataFrame):
             data = dataframe.copy()
             data = data.groupby(['Period']).agg(**{'Total Passenger': ('Passenger Count', 'sum')})
             data = data.rename(columns={'Period': 'Activity Period'})
             return data
-                
-                
-        else :  
+
+
+        else:  
             raise TypeError('the dataframe argument should be pandas Dataframe')
-            logger.error('TypeError : input should be pandas Dataframe')
             
         

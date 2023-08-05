@@ -86,7 +86,5 @@ layout = dbc.Container(className='api docs',
 ])
 
 
-def render_api_docs() : 
-    content = layout
-    
-    return content
+def render_api_docs(): 
+    return layout

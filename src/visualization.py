@@ -43,7 +43,7 @@ data = load_data()
 
 
 #calcualte cagr
-def cagr_passanger_overtime(range,data=data) : 
+def cagr_passanger_overtime(range,data=data): 
     data['year'] = data.Period.dt.year
     # passanger_count_group_overtime = data.groupby([ 'Period']).agg(**{'Passenger Total': ('Passenger Count', 'sum')}).reset_index()
     # passanger_count_group_overtime['year'] = passanger_count_group_overtime.Period.year
@@ -53,8 +53,7 @@ def cagr_passanger_overtime(range,data=data) :
     begin_val = year_group.loc[year_group.year==begin_year,'Passenger Annual'].sum() #sum the beginning year value
     end_val = year_group.loc[year_group.year==end_year,'Passenger Annual'].sum() #sum the final  year value
     distance_year = end_year - begin_year
-    cagr = np.round((((end_val / begin_val)**(1/float(distance_year))) -1) *100,2)
-    return cagr
+    return np.round((((end_val / begin_val)**(1/float(distance_year))) -1) *100,2)
 
 def render_passenger_overtime(range,data=data) : 
     passanger_count_group_overtime = data.groupby([ 'Period']).agg(**{'Passenger Total': ('Passenger Count', 'sum')}).reset_index()
@@ -238,32 +237,30 @@ def render_histogram_ts_data() :
     return fig
 
 
-def cagr_passanger_per_airlines(range,airline,data=data) : 
+def cagr_passanger_per_airlines(range,airline,data=data): 
     data['year'] = data.Period.dt.year
     # passanger_count_group_overtime = data.groupby([ 'Period']).agg(**{'Passenger Total': ('Passenger Count', 'sum')}).reset_index()
     # passanger_count_group_overtime['year'] = passanger_count_group_overtime.Period.year
-    airlines_group = data.groupby([ 'year','Operating Airline']).agg(**{'Passenger Annual': ('Passenger Count', 'sum')}).reset_index()    
+    airlines_group = data.groupby([ 'year','Operating Airline']).agg(**{'Passenger Annual': ('Passenger Count', 'sum')}).reset_index()
     begin_year = int(range[0])
     end_year = int(range[1])
     begin_val = airlines_group.loc[((airlines_group['Operating Airline']==airline) & (airlines_group['year'] == begin_year)) ,'Passenger Annual'].sum()
     end_val = airlines_group.loc[((airlines_group['Operating Airline']==airline) & (airlines_group['year'] == end_year)) ,'Passenger Annual'].sum()
     distance_year = end_year - begin_year
-    cagr = np.round((((end_val / begin_val)**(1/float(distance_year))) -1) *100,2)
-    return cagr 
+    return np.round((((end_val / begin_val)**(1/float(distance_year))) -1) *100,2) 
 
 
-def cagr_passanger_per_region(range,region,data=data) : 
+def cagr_passanger_per_region(range,region,data=data): 
     data['year'] = data.Period.dt.year
     # passanger_count_group_overtime = data.groupby([ 'Period']).agg(**{'Passenger Total': ('Passenger Count', 'sum')}).reset_index()
     # passanger_count_group_overtime['year'] = passanger_count_group_overtime.Period.year
-    region_group = data.groupby([ 'year','GEO Region']).agg(**{'Passenger Annual': ('Passenger Count', 'sum')}).reset_index()    
+    region_group = data.groupby([ 'year','GEO Region']).agg(**{'Passenger Annual': ('Passenger Count', 'sum')}).reset_index()
     begin_year = int(range[0])
     end_year = int(range[1])
     begin_val = region_group.loc[((region_group['GEO Region']==region) & (region_group['year'] == begin_year)) ,'Passenger Annual'].sum()
     end_val = region_group.loc[((region_group['GEO Region']==region) & (region_group['year'] == end_year)) ,'Passenger Annual'].sum()
     distance_year = end_year - begin_year
-    cagr = np.round((((end_val / begin_val)**(1/float(distance_year))) -1) *100,2)
-    return cagr 
+    return np.round((((end_val / begin_val)**(1/float(distance_year))) -1) *100,2) 
     
     
 
